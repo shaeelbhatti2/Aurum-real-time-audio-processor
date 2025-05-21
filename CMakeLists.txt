@@ -9,6 +9,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_library(aurum_core
     src/app/application.cpp
     src/engine/audio_engine.cpp
+    src/dsp/effect_chain.cpp
 )
 
 target_include_directories(aurum_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
