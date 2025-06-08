@@ -12,6 +12,7 @@ add_library(aurum_core
     src/dsp/effect_chain.cpp
     src/io/wav_file.cpp
     src/io/offline_renderer.cpp
+    src/plugin/plugin_host.cpp
 )
 
 target_include_directories(aurum_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
