@@ -1,13 +1,28 @@
 #include <aurum/app/application.hpp>
 #include <aurum/engine/audio_config.hpp>
 #include <aurum/engine/audio_engine.hpp>
+#include <aurum/gui/aurum_gui.hpp>
 #include <aurum/version.hpp>
 
 #include <iostream>
+#include <string>
 
 namespace aurum {
 
-int Application::run() {
+int Application::run(int argc, char** argv) {
+    bool gui_mode = false;
+    for (int i = 1; i < argc; ++i) {
+        const std::string arg = argv[i];
+        if (arg == "--gui") {
+            gui_mode = true;
+        }
+    }
+
+    if (gui_mode) {
+        gui::AurumGui gui;
+        return gui.run();
+    }
+
     std::cout << kName << " v" << kVersion << '\n';
 
     AudioConfig config;
