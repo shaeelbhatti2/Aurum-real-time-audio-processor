@@ -32,4 +32,10 @@ endif()
 add_executable(aurum src/app/main.cpp)
 target_link_libraries(aurum PRIVATE aurum_core)
 
+option(AURUM_BUILD_PLUGINS "Build bundled plugins" ON)
+if(AURUM_BUILD_PLUGINS)
+    add_subdirectory(plugins/gain)
+    add_subdirectory(plugins/panner)
+endif()
+
 install(TARGETS aurum RUNTIME DESTINATION bin)
