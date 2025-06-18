@@ -13,6 +13,7 @@ add_library(aurum_core
     src/io/wav_file.cpp
     src/io/offline_renderer.cpp
     src/plugin/plugin_host.cpp
+    src/preset/preset_manager.cpp
 )
 
 target_include_directories(aurum_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
