@@ -1,10 +1,7 @@
 #include <aurum/preset/preset_manager.hpp>
 
+#include <aurum/dsp/effect_factory.hpp>
 #include <aurum/dsp/effects/compressor.hpp>
-#include <aurum/dsp/effects/delay.hpp>
-#include <aurum/dsp/effects/distortion.hpp>
-#include <aurum/dsp/effects/parametric_eq.hpp>
-#include <aurum/dsp/effects/reverb.hpp>
 
 #include <fstream>
 #include <sstream>
@@ -23,22 +20,8 @@ std::string trim(const std::string& value) {
 }
 
 std::unique_ptr<dsp::Effect> make_effect(const std::string& type) {
-    if (type == "eq") {
-        return std::make_unique<dsp::ParametricEqEffect>();
-    }
-    if (type == "compressor") {
-        return std::make_unique<dsp::CompressorEffect>();
-    }
-    if (type == "delay") {
-        return std::make_unique<dsp::DelayEffect>();
-    }
-    if (type == "reverb") {
-        return std::make_unique<dsp::ReverbEffect>();
-    }
-    if (type == "distortion") {
-        return std::make_unique<dsp::DistortionEffect>();
-    }
-    return nullptr;
+    static dsp::EffectFactory factory;
+    return factory.create(type);
 }
 
 }  // namespace
