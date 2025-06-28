@@ -30,6 +30,7 @@ private:
     dsp::EffectChain chain_;
     engine::Transport transport_;
     preset::PresetManager presets_;
+    dsp::FftAnalyzer fft_{256};
     LockFreeRingBuffer meter_buffer_{2048};
 
     void* window_ = nullptr;

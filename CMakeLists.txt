@@ -10,7 +10,9 @@ include(FetchContent)
 
 add_library(aurum_core
     src/app/application.cpp
+    src/app/session.cpp
     src/engine/audio_engine.cpp
+    src/engine/device_manager.cpp
     src/dsp/effect_chain.cpp
     src/io/wav_file.cpp
     src/io/offline_renderer.cpp

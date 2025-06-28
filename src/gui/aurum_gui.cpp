@@ -5,6 +5,7 @@
 #include <aurum/dsp/effects/distortion.hpp>
 #include <aurum/dsp/effects/parametric_eq.hpp>
 #include <aurum/dsp/effects/reverb.hpp>
+#include <aurum/dsp/utils/fft_analyzer.hpp>
 
 #include <GLFW/glfw3.h>
 #include <imgui.h>
@@ -135,16 +136,16 @@ void AurumGui::draw_meter_panel() {
     ImGui::Begin("Meters");
     meter_buffer_.snapshot(waveform_, 512);
     if (!waveform_.empty()) {
+        fft_.analyze(waveform_.data(), waveform_.size());
+        const auto& mags = fft_.magnitudes();
+        for (std::size_t i = 0; i < spectrum_.size() && i < mags.size(); ++i) {
+            spectrum_[i] = spectrum_[i] * 0.7f + mags[i] * 0.3f;
+        }
         ImGui::PlotLines("Waveform", waveform_.data(),
                          static_cast<int>(waveform_.size()), 0, nullptr, -1.0f, 1.0f,
                          ImVec2(0, 80));
     }
 
-    for (std::size_t i = 0; i < spectrum_.size(); ++i) {
-        const float sample =
-            waveform_.empty() ? 0.0f : waveform_[i % waveform_.size()];
-        spectrum_[i] = spectrum_[i] * 0.85f + std::abs(sample) * 0.15f;
-    }
     ImGui::PlotHistogram("Spectrum", spectrum_.data(), static_cast<int>(spectrum_.size()), 0,
                          nullptr, 0.0f, 1.0f, ImVec2(0, 80));
     ImGui::End();
